@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_currency_exchange" model="ir.ui.view">
+        <field name="name">currency.exchange.form</field>
+        <field name="model">currency.exchange</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="base_currency"/>
+                    <field name="exchange_date"/>
+                </group>
+                <notebook>
+                    <page string="Exchange Rates">
+                        <field name="exchange_rates" widget="one2many_list">
+                            <tree>
+                                <field name="currency"/>
+                                <field name="rate"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+</odoo>
