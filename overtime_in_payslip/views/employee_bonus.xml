@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_overtime_form" model="ir.ui.view">
+            <field name="name">employee.overtime.form</field>
+            <field name="model">employee.overtime</field>
+            <field name="arch" type="xml">
+                <form string="Employee Bonus">
+                    <header>
+                        <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                            states="draft" groups="hr.group_hr_manager"/>
+                        <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                            states="draft" groups="hr.group_hr_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approve"/>
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group>
+                                <field name="type" attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                                <field name="employee_id"
+                                       attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('type', '!=', 'employee')], 'required': [('type', '=', 'employee')], 'invisible': [('type', '!=', 'employee')]}"
+                                       force_save="1"/>
+                                <field name="department_id"
+                                       attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('type', '!=', 'department')], 'required': [('type', '=', 'department')], 'invisible': [('type', 'not in', ['employee', 'department'])]}"
+                                       force_save="1"/>
+                                <field name="type_id" attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="date"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                                <field name="overtime_per" attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('type', '!=', 'employee')]}"
+                                       force_save="1"/>
+                                <field name="no_of_days" string="No Days/Hours" attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('type', '!=', 'employee')]}"
+                                       force_save="1"/>
+
+                                <field name="bonus_amount"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                                <field name="company_id" readonly="1" force_save="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_employee_overtime_tree" model="ir.ui.view">
+            <field name="name">employee.overtime.tree</field>
+            <field name="model">employee.overtime</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Bonus" delete="0">
+                    <field name="type"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="type_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_employee_overtime_search" model="ir.ui.view">
+            <field name="name">employee.overtime.search</field>
+            <field name="model">employee.overtime</field>
+            <field name="arch" type="xml">
+                <search string="Bonus Filters">
+                    <group name="group" string="Group by...">
+                        <filter string="Type" name="groupby_type" domain="[]" context="{'group_by': 'type'}"/>
+                        <filter string="Bonus Type" name="groupby_bonus_type" domain="[]" context="{'group_by': 'type_id'}"/>
+                        <filter string="Department" name="groupby_department" domain="[]" context="{'group_by': 'department_id'}"/>
+                        <filter string="Employee" name="groupby_employee" domain="[]" context="{'group_by': 'employee_id'}"/>
+                        <filter string="Status" name="groupby_state" domain="[]" context="{'group_by': 'state'}"/>
+                        <filter string="Date" name="groupby_date" domain="[]" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_employee_overtime" model="ir.actions.act_window">
+            <field name="name">Employee Overtime</field>
+            <field name="res_model">employee.overtime</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

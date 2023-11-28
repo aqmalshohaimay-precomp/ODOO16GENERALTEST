@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_overtime_types_tree" model="ir.ui.view">
+            <field name="name">overtime.type.tree</field>
+            <field name="model">overtime.type</field>
+            <field name="arch" type="xml">
+                <tree string="Overtime Types" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_overtime_types" model="ir.actions.act_window">
+            <field name="name">Overtime Types</field>
+            <field name="res_model">overtime.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

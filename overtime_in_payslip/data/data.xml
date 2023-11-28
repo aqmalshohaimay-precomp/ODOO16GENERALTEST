@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="1">
+
+        <record id="hr_salary_rule_overtime" model="hr.salary.rule">
+            <field name="name">Overtime</field>
+            <field name="sequence" eval="50"/>
+            <field name="code">OVERTIME</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="is_overtime_rule">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = employee_overtime_amount(payslip)</field>
+            <field name="struct_id" ref="hr_payroll.structure_002"/>
+
+        </record>
+    </data>
+</odoo>

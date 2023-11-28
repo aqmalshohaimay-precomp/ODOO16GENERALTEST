@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="overtime_report_wizard_form_view">
+            <field name="name">overtime.report.wizard.form</field>
+            <field name="model">overtime.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Print">
+                    <group>
+                        <group>
+                            <field name="department_id" attrs="{'readonly': [('employee_id', '!=', False)]}"
+                                   force_save="1"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Print" name="print_report" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="overtime_report_wizard_action" model="ir.actions.act_window">
+            <field name="name">Employees overtime</field>
+            <field name="res_model">overtime.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top menu item -->
+    <menuitem name="Overtime" id="menu_overtime_management"
+              web_icon="overtime_in_payslip,static/description/icon.png" sequence="100">
+
+        <menuitem id="menu_overtime_configuration" name="Overtime" sequence="1">
+            <menuitem id="employee_overtime_menu" name="Employee Overtime" sequence="1" action="action_employee_overtime"/>
+            <menuitem id="overtime_type_menu" name="Overtime Types" sequence="2" action="action_overtime_types"/>
+        </menuitem>
+        <menuitem id="menu_overtime_reporting_root" name="Reporting" sequence="2">
+
+            <menuitem id="overtime_report_menu" name="Employees Overtime"
+                      sequence="2" action="overtime_report_wizard_action"/>
+
+        </menuitem>
+
+    </menuitem>
+</odoo>

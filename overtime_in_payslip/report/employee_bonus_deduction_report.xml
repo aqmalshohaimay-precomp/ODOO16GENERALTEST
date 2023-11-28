@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="report_employee_overtime"
+            string="Employee Overtime Report"
+            model="overtime_in_payslip.employee_overtime_report_doc"
+            report_type="qweb-pdf"
+            file="overtime_in_payslip.employee_overtime_report_doc"
+            name="overtime_in_payslip.employee_overtime_report_doc"
+            paperformat="base.paperformat_euro" />
+    </data>
+</openerp>

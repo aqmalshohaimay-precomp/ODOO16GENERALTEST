@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="employee_overtime_report_doc">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="company" t-value="o.company_id"/>
+
+                    <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                        <div class="row">
+                            <div class="col-3 mb4">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                            </div>
+                            <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                        </div>
+                        <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                            <div class="col-12">
+                                <div style="border-bottom: 1px solid black;"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <div class="pt-5">
+                            <t t-call="web.address_layout"/>
+                        </div>
+                        <div class="page" style="text-align:right;font-size:16px;">
+                            <center>
+                                <h2>
+                                    <b>
+                                        Employees Overtime
+                                    </b>
+                                </h2>
+                                <h4 t-if="data['employee_id']">Employee <span t-esc="data['employee_id'][1]"/></h4>
+                                <h4 t-if="data['department_id']">Department <span t-esc="data['department_id'][1]"/></h4>
+                                <h6>From <span t-esc="data['from_date']"/> - To <span t-esc="data['to_date']"/></h6>
+                            </center>
+                            <br/>
+                            <div class="row">
+                                <!-- MAin View row-->
+                                <table class="table table-condensed table-border">
+                                    <thead>
+                                        <tr style="text-align:center;background-color:#C8C8C8;border: 2px solid #C8C8C8">
+                                            <th style="text-align:center;border: 2px solid #C8C8C8">Employee</th>
+                                            <th style="text-align:center;border: 2px solid #C8C8C8">Department</th>
+                                            <th style="text-align:center;border: 2px solid #C8C8C8">
+                                                <span>Overtime Type</span>
+                                            </th>
+                                            <th style="text-align:center;border: 2px solid #C8C8C8">Date</th>
+                                            <th style="text-align:center;border: 2px solid #C8C8C8">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="total" t-value="0.0"/>
+                                        <tr style="direction:rtl;text-align:center" t-foreach="data['lines']" t-as="line">
+                                            <td style="text-align:center;border: 2px solid #C8C8C8"><span t-esc="line.employee_id.name"/></td>
+                                            <td style="text-align:center;border: 2px solid #C8C8C8"><span t-esc="line.department_id.name"/></td>
+                                            <td style="text-align:center;border: 2px solid #C8C8C8">
+                                                <span t-esc="line.type_id.name"/>
+                                            </td>
+                                            <td style="text-align:center;border: 2px solid #C8C8C8"><span t-esc="line.date"/></td>
+                                            <td style="text-align:center;border: 2px solid #C8C8C8">
+                                                <t t-set="total" t-value="total + line.bonus_amount"/>
+                                                <span t-esc="line.bonus_amount"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <ttail>
+                                        <tr style="direction:rtl;text-align:center;background-color:#C8C8C8;border: 2px solid #C8C8C8">
+                                            <th colspan="4" style="text-align:center;border: 1px solid #C8C8C8">Total</th>
+                                            <th style="text-align:center;border: 2px solid #C8C8C8"><span t-esc="total"/></th>
+                                        </tr>
+                                    </ttail>
+                                </table>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+
+                    <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                        <div class="text-center" style="border-top: 1px solid black;">
+                            <ul class="list-inline mb4">
+                                <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
+                                     adding d-inline class fixes the problem-->
+                                <li t-if="company.phone" class="list-inline-item d-inline"><span t-field="company.phone"/></li>
+                                <li t-if="company.email" class="list-inline-item d-inline"><span t-field="company.email"/></li>
+                                <li t-if="company.website" class="list-inline-item d-inline"><span t-field="company.website"/></li>
+                                <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
