@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_m2e_url" model="ir.actions.server">
+        <field name="name">Open M2E URL</field>
+        <field name="model_id" ref="m2e.model"/>
+        <field name="state">code</field>
+        <field name="code">
+            self.m2e_url().update({'target': 'new'})
+            result = {
+                'type': 'ir.actions.act_url',
+                'url': 'http://103.76.88.11/sib_m2e.php' + str(self.company_id.id),  # Assuming company_id is a field in your model
+                'target': 'new',
+            }
+            return result
+        </field>
+    </record>
+</odoo>
